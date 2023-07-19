@@ -6,10 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.mateusfiereck.androidarchitectures.domain.model.CharacterModel
 import br.com.mateusfiereck.androidarchitectures.domain.repository.CharacterRepository
+import br.com.mateusfiereck.androidarchitectures.domain.usecase.IsFeatureEnableUseCase
 import kotlinx.coroutines.launch
 
 class MvvmViewStateViewModel(
     private val repository: CharacterRepository,
+    private val isFeatureEnableUseCase: IsFeatureEnableUseCase,
 ) : ViewModel() {
 
     private val _viewState = MutableLiveData(ViewState())
@@ -19,6 +21,13 @@ class MvvmViewStateViewModel(
 
     init {
         getCharacter()
+        initFeatureFlags()
+    }
+
+    private fun initFeatureFlags() {
+        _viewState.value = viewState.value?.copy(
+            isButtonEnable = isFeatureEnableUseCase.isEnabled("button"),
+        )
     }
 
     fun getCharacter() {
@@ -51,7 +60,16 @@ class MvvmViewStateViewModel(
     }
 
     fun onSeeOriginClick() {
-        // todo
+        _viewState.value = viewState.value?.copy(
+            showDialog = true,
+            origin = characterModel?.origin,
+        )
+    }
+
+    fun consumeDialog() {
+        _viewState.value = viewState.value?.copy(
+            showDialog = false,
+        )
     }
 
     data class ViewState(
@@ -61,5 +79,8 @@ class MvvmViewStateViewModel(
         val characterName: String = "",
         val characterStatus: String = "",
         val characterSpecies: String = "",
+        val showDialog: Boolean = false,
+        val origin: CharacterModel.Origin? = null,
+        val isButtonEnable: Boolean = false,
     )
 }

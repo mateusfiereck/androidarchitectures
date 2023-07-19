@@ -13,9 +13,9 @@ import org.koin.dsl.module
 object PresentationModule {
 
     val modules = module {
-        viewModel { MvvmViewModel(repository = get()) }
-        viewModel { MvvmStateMachineViewModel(repository = get()) }
-        viewModel { MvvmViewStateViewModel(repository = get()) }
+        viewModel { MvvmViewModel(repository = get(), get()) }
+        viewModel { MvvmStateMachineViewModel(repository = get(), get()) }
+        viewModel { MvvmViewStateViewModel(repository = get(), get()) }
         viewModel { MviViewModel(repository = get()) }
 
         factory { params ->

@@ -48,6 +48,7 @@ class MviViewModel(
 
     private fun onSeeOriginClick() {
         _viewEvent.value = ViewEvent.ShowOriginDialog(characterModel?.origin)
+        _viewEvent.value = ViewEvent.ShowSnackbar
     }
 
     sealed class ViewIntent {
@@ -59,6 +60,8 @@ class MviViewModel(
         data class ShowOriginDialog(
             val origin: CharacterModel.Origin?
         ) : ViewEvent()
+
+        object ShowSnackbar: ViewEvent()
     }
 
     data class ViewState(
@@ -68,6 +71,7 @@ class MviViewModel(
         val characterName: String = "",
         val characterStatus: String = "",
         val characterSpecies: String = "",
+        val viewEvent: ViewEvent? = null,
     ) {
 
         fun setLoading() = copy(

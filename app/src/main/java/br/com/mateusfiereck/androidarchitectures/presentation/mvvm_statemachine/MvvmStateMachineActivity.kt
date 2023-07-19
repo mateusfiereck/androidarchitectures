@@ -37,13 +37,17 @@ class MvvmStateMachineActivity : AppCompatActivity() {
                 }
 
                 is MvvmStateMachineViewModel.State.Success -> {
-                    showSuccess(state.model)
+                    showSuccess(state.model, state.buttonEnabled)
                 }
 
                 is MvvmStateMachineViewModel.State.Error -> {
                     showError()
                 }
             }
+        }
+
+        viewModel.showDialog.observe(this) {
+            showOriginDialog(it)
         }
     }
 
@@ -53,7 +57,7 @@ class MvvmStateMachineActivity : AppCompatActivity() {
         binding.textError.isVisible = false
     }
 
-    private fun showSuccess(model: CharacterModel) {
+    private fun showSuccess(model: CharacterModel, buttonEnable: Boolean) {
         binding.progressLoading.isVisible = false
         binding.layoutContent.isVisible = true
         binding.textError.isVisible = false
@@ -61,6 +65,7 @@ class MvvmStateMachineActivity : AppCompatActivity() {
         binding.textName.text = getString(R.string.text_character_name, model.name)
         binding.textStatus.text = getString(R.string.text_character_status, model.status)
         binding.textSpecies.text = getString(R.string.text_character_specie, model.species)
+        binding.buttonOrigin.isVisible = buttonEnable
     }
 
     private fun showError() {

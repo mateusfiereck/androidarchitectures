@@ -34,11 +34,15 @@ class MvvmViewStateActivity : AppCompatActivity() {
             binding.progressLoading.isVisible = viewState.isLoading
             binding.layoutContent.isVisible = viewState.isSuccess
             binding.textError.isVisible = viewState.isError
+            binding.buttonOrigin.isVisible = viewState.isButtonEnable
 
             if (viewState.isSuccess) {
                 binding.textName.text = getString(R.string.text_character_name, viewState.characterName)
                 binding.textStatus.text = getString(R.string.text_character_status, viewState.characterStatus)
                 binding.textSpecies.text = getString(R.string.text_character_specie, viewState.characterSpecies)
+            }
+            if (viewState.showDialog) {
+                showOriginDialog(viewState.origin)
             }
         }
     }
@@ -48,6 +52,9 @@ class MvvmViewStateActivity : AppCompatActivity() {
             .setTitle(getString(R.string.text_local))
             .setMessage(origin?.name)
             .setPositiveButton(android.R.string.ok) { _, _ -> }
+            .setOnDismissListener {
+                viewModel.consumeDialog()
+            }
             .show()
     }
 }

@@ -41,6 +41,14 @@ class MvvmActivity : AppCompatActivity() {
         viewModel.showError.observe(this) {
             showError()
         }
+
+        viewModel.showDialog.observe(this) {
+            showOriginDialog(it)
+        }
+
+        viewModel.buttonEnable.observe(this) {
+            binding.buttonOrigin.isVisible = it
+        }
     }
 
     private fun showLoading() {

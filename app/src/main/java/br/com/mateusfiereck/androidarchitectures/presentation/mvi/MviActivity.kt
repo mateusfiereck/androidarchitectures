@@ -47,6 +47,9 @@ class MviActivity : AppCompatActivity() {
                 is MviViewModel.ViewEvent.ShowOriginDialog -> {
                     showOriginDialog(viewAction.origin)
                 }
+                is MviViewModel.ViewEvent.ShowSnackbar -> {
+                    // todo
+                }
             }
         }
     }
