@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Android Architectures</string>
+
+    <string name="text_character_name">Personagem: %s</string>
+    <string name="text_character_status">Status: %s</string>
+    <string name="text_character_specie">Espécie: %s</string>
+    <string name="text_local">Localização</string>
+    <string name="text_error">Ocorreu um erro.</string>
+
+    <string name="button_see_local">Ver localização</string>
+</resources>
